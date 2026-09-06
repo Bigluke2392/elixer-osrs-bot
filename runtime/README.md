@@ -73,9 +73,20 @@ other plugins).
 
 `Includes/WaspLib_v1` / `SRL-T_v1` (the pre-refactor libs for any script
 that includes `osr.simba`) aren't present in this fork at all — only the
-`_v2` generation was carried over. Scripts requiring `osr.simba` will fail
-to compile until those are fetched too (same repos as above, at whatever
-tag/commit predates the refactor).
+`_v2` generation was carried over. As of this writing none of the 54
+scripts in `Scripts/` need them (`grep -rl "osr\.simba" Scripts/*.simba`
+returns nothing), so this is currently harmless.
+
+If a v1 script ever gets added, note that `osr.simba` isn't in
+`Torwent/SRL-T` or `Torwent/WaspLib`'s tracked git history at all (current
+or past — checked via GitHub's commits API), so "the same repos, an older
+commit" won't work. `SRL-T/main.simba` says it's "originally based on"
+[`Villavu/SRL-Development`](https://github.com/Villavu/SRL-Development),
+and SRL's own versioning docs point at `osr.simba` living in yet another
+repo, [`SRL/SRL`](https://github.com/SRL/SRL) — so the actual v1 source is
+likely one of those separate, older-lineage repos, not a tag/commit of
+SRL-T or WaspLib proper. Worth confirming against whatever machine this
+was originally set up on before assuming either of those.
 
 ## Running directly
 
