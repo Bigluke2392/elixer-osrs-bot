@@ -42,6 +42,41 @@ Scripts target one of two library versions. The launcher repoints the
   include `osr.simba`.
 - **v2** (`SRL-T_v2` / `WaspLib_v2`) — current libs, for everything else.
 
+## Setting up on a fresh clone
+
+The gitignored binaries below aren't vendored in this repo (see
+`.gitignore`'s "re-obtainable binaries" section) and have to be fetched
+separately after cloning:
+
+- **`Simba64.exe`** — official Windows 64-bit build from the pinned
+  `simba1400-release` tag:
+  `https://github.com/Villavu/Simba/releases/download/simba1400-release/Simba-Win64.exe`.
+  Note: this trips Windows Defender's `Trojan:Win32/Phonzy.A!ml` heuristic
+  (a generic ML false-positive common for input-automation tools) — add a
+  Defender exclusion for `runtime/` *before* downloading, or it'll be
+  silently deleted on arrival.
+- **`Includes/SRL-T_v2/plugins/`** — the native plugin DLLs SRL-T scripts
+  load via `{$loadlib}` (`libasyncmouse`, `libremoteinput`, `libsimpleocr`,
+  `libslacktree`, `libtpaex`). Not published as GitHub releases — they're
+  committed directly as binaries in the upstream repo. Copy the whole
+  folder from `https://github.com/Torwent/SRL-T` (`plugins/`).
+- **`Includes/WaspLib_v2/plugins/`** — same story for WaspLib's own
+  plugins (`ffmpeg.exe`, `libSound.dll`, `librecorder32.dll`,
+  `librecorder64.dll`). Copy from `https://github.com/Torwent/WaspLib`
+  (`plugins/`).
+
+Without these, `check.ps1`'s Simba compile sweep fails every v2 script with
+`Plugin ".../libslacktree/libslacktree" not found` (or similar for the
+other plugins).
+
+### v1 libraries not vendored
+
+`Includes/WaspLib_v1` / `SRL-T_v1` (the pre-refactor libs for any script
+that includes `osr.simba`) aren't present in this fork at all — only the
+`_v2` generation was carried over. Scripts requiring `osr.simba` will fail
+to compile until those are fetched too (same repos as above, at whatever
+tag/commit predates the refactor).
+
 ## Running directly
 
 Launch `Simba64.exe` (or the `osrs-bot Simba` desktop shortcut), open a script
